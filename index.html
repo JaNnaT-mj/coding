@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Code - Python File</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        body {
+            background-color: #1e1e1e;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .editor-box {
+            background: #282c34;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .editor-header {
+            background: #3a3f4b;
+            color: white;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 5px 5px 0 0;
+            display: flex;
+            align-items: center;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+        .code-container {
+            font-size: 14px;
+            line-height: 1.5;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            white-space: pre;
+            border-left: 3px solid #61afef;
+        }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: #ffffff;
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</head>
+<body>
+
+    <div class="editor-box">
+        <div class="editor-header">
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
+            <span>python.py</span>
+        </div>
+        <pre class="code-container" id="codeBox">
+            <code id="typedCode" class="language-python"></code><span class="cursor"></span>
+        </pre>
+    </div>
+
+    <script>
+        const codeContent = `# Python Program to Calculate Factorial of a Number
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+# Taking user input
+num = int(input("Enter a number: "))
+
+# Displaying the result
+print(f"The factorial of {num} is {factorial(num)}")`;
+
+        let index = 0;
+        let speed = 10;
+        const typedCode = document.getElementById("typedCode");
+        const codeBox = document.getElementById("codeBox");
+
+        function typeCode() {
+            if (index < codeContent.length) {
+                typedCode.innerHTML += codeContent.charAt(index);
+                Prism.highlightElement(typedCode); // Syntax Highlighting
+                index++;
+                codeBox.scrollTop = codeBox.scrollHeight; // Auto Scroll Down
+                setTimeout(typeCode, speed);
+            }
+        }
+
+        setTimeout(typeCode, 1000);
+    </script>
+
+</body>
+      </html>
